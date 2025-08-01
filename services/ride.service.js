@@ -1,6 +1,5 @@
 const rideModel = require('../models/ride.model');
-const mapService = require('./maps.service');
-const bcrypt = require('bcrypt');
+const mapService = require('../services/maps.service');
 const crypto = require('crypto');
 
 async function getFare(pickup, destination) {
@@ -12,15 +11,15 @@ async function getFare(pickup, destination) {
     const distanceTime = await mapService.getDistanceTime(pickup, destination);
 
     const baseFare = {
-        auto: 30,
-        car: 50,
-        moto: 20
+        auto: 10,
+        car: 20,
+        moto: 5
     };
 
     const perKmRate = {
-        auto: 10,
-        car: 15,
-        moto: 8
+        auto: 5,
+        car: 8,
+        moto: 3
     };
 
     const perMinuteRate = {
@@ -32,9 +31,9 @@ async function getFare(pickup, destination) {
 
 
     const fare = {
-        auto: Math.round(baseFare.auto + ((distanceTime.distance.value / 1000) * perKmRate.auto) + ((distanceTime.duration.value / 60) * perMinuteRate.auto)),
-        car: Math.round(baseFare.car + ((distanceTime.distance.value / 1000) * perKmRate.car) + ((distanceTime.duration.value / 60) * perMinuteRate.car)),
-        moto: Math.round(baseFare.moto + ((distanceTime.distance.value / 1000) * perKmRate.moto) + ((distanceTime.duration.value / 60) * perMinuteRate.moto))
+        auto: Math.round(baseFare.auto + ((distanceTime.distance.value / 1000) * perKmRate.auto) + ((distanceTime.duration.value / 60) * perMinuteRate.auto)/10),
+        car: Math.round(baseFare.car + ((distanceTime.distance.value / 1000) * perKmRate.car) + ((distanceTime.duration.value / 60) * perMinuteRate.car)/10),
+        moto: Math.round(baseFare.moto + ((distanceTime.distance.value / 1000) * perKmRate.moto) + ((distanceTime.duration.value / 60) * perMinuteRate.moto)/10)
     };
 
     return fare;
