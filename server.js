@@ -6,11 +6,11 @@ const port = process.env.PORT || 3000;
 
 const server = http.createServer(app);
 
-app.use(cors({
-  origin: ['http://localhost:5173'],
-  methods: ['GET', 'POST'],
-  credentials: true
-}));
+// app.use(cors({
+//   origin: ['http://localhost:5173'],
+//   methods: ['GET', 'POST'],
+//   credentials: true
+// }));
 
 initializeSocket(server);
 
